@@ -20,7 +20,7 @@ params:
     buttonClear: Clear
     buttonSend: Send message
     email:
-      - email: rwei.mfa2022@london.edu
+      - email: rrrrr@london.edu
         title: Email
     enable: yes
     phone:
@@ -106,7 +106,7 @@ params:
         url: blogs/cali
   two:
 #    buttonText: Get Started
-    enable: yes
+#    enable: yes
     subtitle: "Please feel free to connect me on social media or leave a message below."
     title: Staying connected
     url: blogs
