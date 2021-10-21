@@ -35,3 +35,9 @@ pie(
   init.angle = -50, border = NA
 )
 ```
+
+
+```{r}
+knitr::include_graphics("/img/german.jpg",error =FALSE)
+```
+

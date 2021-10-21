@@ -1,0 +1,123 @@
+---
+categories:  
+- ""    #the front matter should be like the one found in, e.g., blog2.md. It cannot be like the normal Rmd we used
+- ""
+date: "2021-09-30"
+description: German Elections Opinion Polls # the title that will show up once someone gets to this page
+draft: false
+image: spices.jpg # save picture in \static\img\blogs. Acceptable formats= jpg, jpeg, or png . Your iPhone pics wont work
+
+keywords: ""
+slug: projectone # slug is the shorthand URL address... no spaces plz
+title: German Elections
+---
+
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(fivethirtyeight)
+library(here)
+library(ggplot2)
+library(dplyr)
+library(skimr)
+library(janitor)
+library(vroom)
+library(tidyquant)
+library(rvest)
+library(ggrepel)
+library(lubridate)
+library(fivethirtyeight)
+library(data.table)
+library(latex2exp)
+library(reshape2)
+```
+
+# Opinion polls for the 2021 German elections
+
+The Guardian newspaper has an [election poll tracker for the upcoming German election](https://www.theguardian.com/world/2021/aug/20/german-election-poll-tracker-who-will-be-the-next-chancellor).
+The list of the opinion polls since Jan 2021 can be found at [Wikipedia](https://en.wikipedia.org/wiki/Opinion_polling_for_the_2021_German_federal_election) and your task is to reproduce the graph similar to the one produced by the Guardian. 
+
+
+```{r, scrape_wikipedia_polling_data, warnings= FALSE, message=FALSE, echo=FALSE}
+url <- "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2021_German_federal_election"
+
+# get tables that exist on wikipedia page 
+tables <- url %>% 
+  read_html() %>% 
+  html_nodes(css="table")
+
+
+# parse HTML tables into a dataframe called polls 
+# Use purr::map() to create a list of all tables in URL
+polls <- map(tables, . %>% 
+             html_table(fill=TRUE)%>% 
+             janitor::clean_names())
+
+
+# list of opinion polls
+german_election_polls <- polls[[1]] %>% # the first table on the page contains the list of all opinions polls
+  slice(2:(n()-1)) %>%  # drop the first row, as it contains again the variable names and last row that contains 2017 results
+  mutate(
+         # polls are shown to run from-to, e.g. 9-13 Aug 2021. We keep the last date, 13 Aug here, as the poll date
+         # and we extract it by picking the last 11 characters from that field
+         end_date = str_sub(fieldwork_date, -11),
+         
+         # end_date is still a string, so we convert it into a date object using lubridate::dmy()
+         end_date = dmy(end_date),
+         
+         # we also get the month and week number from the date, if we want to do analysis by month- week, etc.
+         month = month(end_date),
+         week = isoweek(end_date)
+         )
+```
+
+
+```{r, fig.width = 5, fig.height = 3}
+colors = c("black", "brown4", "deepskyblue4", "goldenrod3", "blue4", "green4")
+
+#Quickly delete the columns we will not be using for plotting:
+polls <- as.data.table(german_election_polls)
+polls[,1:4 := NULL] 
+polls[,11:12 := NULL]
+polls[,c("fw", "others", "lead") := NULL]
+
+#Reshape the data for multi-column plotting:
+polls <- melt(polls, id="end_date")
+
+#Do the plotting. We start with printing out the distinct poll results, then adding the simple MA to the graps:
+ggplot(polls, aes(x = end_date, y = value, colour = variable)) + 
+geom_point(alpha = 0.4, cex = 1.15) + 
+geom_ma(aes(x = end_date+12), ma_fun = SMA, n = 14, position = "identity", linetype = "solid", size = 0.65)+
+#Ensure the color scheme is aligned with the original plot:
+scale_color_manual(values = c(colors)) + 
+#Add the horizontal line grid:
+geom_hline(yintercept = seq(5,45,10), linetype = "dotted", size = 0.5, color = alpha("grey", 0.5))+
+#Delete the default grid:
+theme_bw()+
+theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black"), legend.title = element_text(colour = "grey", size = 1))+
+#Finally, make the axis labels match the original plot
+scale_x_continuous(name = "Polls end date", breaks = as.Date(c("2021-01-01", "2021-03-01", "2021-05-01", "2021-07-01", "2021-09-01"), "%Y-%m-%d"), labels = c("Jan 2021", "Mar", "May", "Jul", "Sep")) +
+scale_y_continuous(name = "Percentage of votes cast", breaks = seq(5,45,10), labels = c(5,15,25,35,"45%"), limits = c(4,46))
+
+```
+

@@ -6,10 +6,9 @@ googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
-    buttonText: Get Started
+    abuttonText: Get Started
     subtitle: |-
-      A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP
-      AND RELEASED UNDER THE CREATIVE COMMONS.
+      WELCOME TO MY BLOG.
     title: Hi, my name is Rainy
   blog: {}
   contact:
@@ -50,7 +49,7 @@ params:
         url: https://www.facebook.com/rainy.wei.5
       - icon: fa-instagram
         label: Instagram
-        url: https://www.instagram.com
+        url: https://www.instagram.com/rainyxrwei/
       - icon: fa-github
         label: GitHub
         url: https://github.com/rainywei99
@@ -60,59 +59,54 @@ params:
   image: ''
   name: Rainy Wei
   navigation:
-    button1:
-      - name: Get Started
-        url: blogs
-    button2:
-      - name: Log In
-        url: '#'
-    links:
-      - name: Home
-        url: '#'
-      - name: Blogs
-        url: blogs
-      - name: Generic Blog
-        url: blogs/ipsum
-      - name: Elements
-        url: elements.html
-    menu: Menu
-    subtitle: By HTML5 Up
-    title: Forty
+#    button1:
+#      - name: Get Started
+ #       url: blogs
+  #  button2:
+   #   - name: Log In
+    #    url: '#'
+   # links:
+    #  - name: Home
+    #    url: '#'
+    #  - name: Blogs
+     #   url: blogs
+      #- name: Generic Blog
+       # url: blogs/ipsum
+      #- name: Elements
+      #  url: elements.html
+   # menu: Menu
+   # subtitle: By HTML5 Up
+    title: Rainy
   tiles:
     enable: yes
     showcase:
-      - image: pic01.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Aliquam
-        url: blogs/aliquam
-      - image: pic02.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Tempus
-        url: blogs/tempus
-      - image: pic03.jpg
-        subtitle: Lorem Etiam Nullam
-        title: Magna
-        url: blogs/magna
-      - image: pic04.jpg
-        subtitle: Nisl Sed Aliquam
-        title: Ipsum
-        url: blogs/ipsum
-      - image: pic05.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Consequat
-        url: blogs/ipsum
-      - image: pic06.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Etiam
-        url: blogs/ipsum
+      - image: me.jpg
+        subtitle: A little bit about myself...
+        title: Self Introduction
+        url: blogs/intro
+      - image: election.jpg
+        subtitle: Please see a data analytics challenge I did on German Elections this year
+        title: Past Project I
+        url: blogs/projectone
+      - image: bike.jpg
+        subtitle: Please see another challenge I did on bike rentals for my Data Analytics class
+        title: Past Project II
+        url: blogs/projecttwo
+      - image: nu.jpg
+        subtitle: Some of my best memories at Northwestern
+        title: My Undergrad Years at Northwestern
+        url: blogs/nu
+      - image: lbs.jpg
+        subtitle: Regent's Park, London, UK
+        title: My Journey at London Business School
+        url: blogs/lbs
+      - image: cali.jpg
+        subtitle: My graduation trip to California
+        title: California Dream
+        url: blogs/cali
   two:
-    buttonText: Get Started
+#    buttonText: Get Started
     enable: yes
-    subtitle: "Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero.
-      \n    Mauris aliquet magna magna sed nunc rhoncus pharetra. \n    Pellentesque
-      condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia
-      pellentesque lorem ipsum dolor. \n    Nullam et orci eu lorem consequat tincidunt.
-      Vivamus et sagittis libero.\n    Mauris aliquet magna magna sed nunc rhoncus
-      amet pharetra et feugiat tempus."
-    title: Massa libero
+    subtitle: "Please feel free to connect me on social media or leave a message below."
+    title: Staying connected
     url: blogs
